@@ -1,4 +1,5 @@
 import express from "express";
+import { EHTTP_STATUSES } from "./constans";
 
 const app = express()
 const port = 3000
@@ -34,9 +35,9 @@ app.get("/courses", (req, res) => {
 app.get("/courses/:id", (req, res) => {
   const foundedCourseById = db.courses.find((item) => item.id === Number(req.params.id));
   if (!foundedCourseById) {
-    return res.sendStatus(404);
+    return res.sendStatus(EHTTP_STATUSES.NOT_FOUND);
   }
-  return res.status(200).json(foundedCourseById)
+  return res.status(EHTTP_STATUSES.CREATED).json(foundedCourseById)
 })
 
 app.delete("/courses/:id", (req, res) => {
@@ -46,37 +47,37 @@ app.delete("/courses/:id", (req, res) => {
   // splice
 
   if (foundedCourseById === -1) {
-    return res.sendStatus(404);
+    return res.sendStatus(EHTTP_STATUSES.NOT_FOUND);
   }
 
   db.courses.splice(foundedCourseById, 1);
 
-  return res.sendStatus(204);
+  return res.sendStatus(EHTTP_STATUSES.NO_CONTENT);
 })
 
 app.post('/courses', (req, res) => {
   if(!req.body.title.trim()) {
-    return res.sendStatus(400);
+    return res.sendStatus(EHTTP_STATUSES.BAD_REQUEST);
   }
   const createdCourse = {
     id: Number(new Date()),
     title: req.body.title
   };
   db.courses.push(createdCourse);
-  return res.status(201).json(createdCourse)
+  return res.status(EHTTP_STATUSES.CREATED).json(createdCourse)
 });
 
 app.put('/courses/:id', (req, res) => {
   if(!req.body.title.trim()) {
-    return res.sendStatus(400);
+    return res.sendStatus(EHTTP_STATUSES.BAD_REQUEST);
   }
   const foundedCourseById = db.courses.find((item) => item.id === Number(req.params.id));
 
   if (!foundedCourseById) {
-    return res.sendStatus(404);
+    return res.sendStatus(EHTTP_STATUSES.NOT_FOUND);
   }
   foundedCourseById.title = req.body.title;
-  return res.status(204).json(foundedCourseById);
+  return res.status(EHTTP_STATUSES.NO_CONTENT).json(foundedCourseById);
 });
 
 app.listen(port, () => {
