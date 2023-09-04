@@ -1,3 +1,4 @@
+require('dotenv').config()
 import express from "express";
 import { EHTTP_STATUSES } from "./constans";
 
@@ -25,7 +26,7 @@ app.get("/courses", (req, res) => {
     return res.json(foundedCourse)
   }
 
-  if(!foundedCourses.length) {
+  if (!foundedCourses.length) {
     res.json([]);
   }
 
@@ -55,8 +56,8 @@ app.delete("/courses/:id", (req, res) => {
   return res.sendStatus(EHTTP_STATUSES.NO_CONTENT);
 })
 
-app.post('/courses', (req, res) => {
-  if(!req.body.title.trim()) {
+app.post("/courses", (req, res) => {
+  if (!req.body.title.trim()) {
     return res.sendStatus(EHTTP_STATUSES.BAD_REQUEST);
   }
   const createdCourse = {
@@ -67,8 +68,8 @@ app.post('/courses', (req, res) => {
   return res.status(EHTTP_STATUSES.CREATED).json(createdCourse)
 });
 
-app.put('/courses/:id', (req, res) => {
-  if(!req.body.title.trim()) {
+app.put("/courses/:id", (req, res) => {
+  if (!req.body.title.trim()) {
     return res.sendStatus(EHTTP_STATUSES.BAD_REQUEST);
   }
   const foundedCourseById = db.courses.find((item) => item.id === Number(req.params.id));
