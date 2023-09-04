@@ -2,7 +2,7 @@ import express from "express";
 import { EHTTP_STATUSES } from "./constans";
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 // middleware call before action handler
 const jsonBodyMiddleware = express.json()
