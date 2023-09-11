@@ -2,7 +2,7 @@ require('dotenv').config()
 import express from "express";
 import { EHTTP_STATUSES } from "./constans";
 
-const app = express()
+export const app = express()
 const port = process.env.PORT || 3000
 
 // middleware call before action handler
@@ -80,6 +80,11 @@ app.put("/courses/:id", (req, res) => {
   foundedCourseById.title = req.body.title;
   return res.status(EHTTP_STATUSES.NO_CONTENT).json(foundedCourseById);
 });
+
+app.delete('/clear-data-test', (req, res) => {
+  db.courses = [];
+  res.sendStatus(EHTTP_STATUSES.NO_CONTENT)
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
