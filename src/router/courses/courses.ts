@@ -37,7 +37,11 @@ export const getCoursesRoutes = (db: any) => {
 
   router.post("/", (req, res) => {
     if (!req.body.title.trim()) {
-      return res.sendStatus(EHTTP_STATUSES.BAD_REQUEST);
+      console.log('===> req.body <===', Object.keys(req.body));
+      return res.status(EHTTP_STATUSES.BAD_REQUEST).json({
+        message: 'Field title is required',
+        description: `${req.body.title} it isn't title`
+      });
     }
     const createdCourse = coursesControllers.creteCourse(req.body.title);
     return res.status(EHTTP_STATUSES.CREATED).json(createdCourse)
