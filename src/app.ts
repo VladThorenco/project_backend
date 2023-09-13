@@ -8,7 +8,6 @@ require('dotenv').config()
 export const app = express()
 export const port = process.env.PORT || 3000
 
-// middleware call before action handler
 const jsonBodyMiddleware = express.json()
 app.use(jsonBodyMiddleware);
 

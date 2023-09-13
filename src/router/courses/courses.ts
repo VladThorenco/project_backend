@@ -1,7 +1,7 @@
 import express from "express";
 import { EHTTP_STATUSES } from "../../constans";
 import { CourseItem } from "../../db";
-import { coursesControllers } from "../../controlles";
+import { coursesControllers } from "../../controllers";
 
 
 export const getCoursesRoutes = (db: any) => {
@@ -37,7 +37,6 @@ export const getCoursesRoutes = (db: any) => {
 
   router.post("/", (req, res) => {
     if (!req.body.title.trim()) {
-      console.log('===> req.body <===', Object.keys(req.body));
       return res.status(EHTTP_STATUSES.BAD_REQUEST).json({
         message: 'Field title is required',
         description: `${req.body.title} it isn't title`
