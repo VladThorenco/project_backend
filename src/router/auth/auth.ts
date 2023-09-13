@@ -13,6 +13,16 @@ export const getAuthRoutes = () => {
     return res.status(EHTTP_STATUSES.CREATED).json(createdCourse)
   });
 
+  router.post("/authorization", loginValidation, validationMiddleware, (req: Request, res: Response) => {
+    const createdCourse = authControllers.checkUser(req.body.login, req.body.password);
+    return res.status(EHTTP_STATUSES.CREATED).json(createdCourse)
+  });
+
+  router.get("/auth-me/:id", loginValidation, validationMiddleware, (req: Request, res: Response) => {
+    const createdCourse = authControllers.creteUser(req.body.login, req.body.password);
+    return res.status(EHTTP_STATUSES.CREATED).json(createdCourse)
+  });
+
   return router;
 }
 
