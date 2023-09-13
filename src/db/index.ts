@@ -1,4 +1,13 @@
-export let db = {
+export interface CourseItem {
+  id: number;
+  title: string;
+}
+
+export interface IDataBase {
+  courses: CourseItem[]
+}
+
+export let db: IDataBase = {
   courses: [
     {id: 1, title: "front-end"},
     {id: 2, title: "back-end"},
