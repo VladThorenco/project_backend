@@ -1,8 +1,7 @@
-import { getCoursesRoutes } from "./router/courses/courses";
 import mongoose from "mongoose";
 import express from "express";
 import { db } from "./db";
-import { getAuthRoutes } from "./router/auth/auth";
+import { getAuthRoutes, getCoursesRoutes, getMoviesRoutes } from "./router";
 
 require("dotenv").config()
 
@@ -23,4 +22,5 @@ app.use(jsonBodyMiddleware);
 
 app.use("/api/courses", getCoursesRoutes(db))
 app.use("/api/auth", getAuthRoutes())
+app.use("/api/movies", getMoviesRoutes())
 
