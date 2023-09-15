@@ -21,8 +21,7 @@ const moviesScheme = new Scheme({
     hours: Number,
     minutes: Number,
   },
-  review: [ {name: String, text: String}
-  ]
+  reviews: [ {name: String, text: String} ]
 })
 
-export const Movie = mongoose.model('Movie', moviesScheme);
+export const Movie = mongoose.model("Movie", moviesScheme);

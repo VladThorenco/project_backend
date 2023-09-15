@@ -1,18 +1,27 @@
 import { Request, Response } from "express"
-import { Movie } from "../../models";
+import { moviesService } from "../../services";
+import { EHTTP_STATUSES } from "../../constans";
 
 export const moviesControllers = {
-  getMovies: async (req: Request, res: Response): Promise<any> => {
-    try {
-      const moviesCollections = await Movie.find().sort({title: 1});
-      res.status(200).json(moviesCollections)
-    } catch (error) {
-      console.log("===> error  <===", error);
+  getMovies: async (_req: Request, res: Response) => {
+    const allMoviesDocument = await moviesService.getAll()
+    if (!allMoviesDocument) {
+      return res.sendStatus(EHTTP_STATUSES.NOT_FOUND);
     }
-    // const allMovies = moviesService.getAll()
-    // if (!allMovies) {
-    //   return res.sendStatus(EHTTP_STATUSES.NOT_FOUND);
-    // }
+    res.status(EHTTP_STATUSES.OK).json(allMoviesDocument)
+  },
 
+  getMovieById: async (req: Request, res: Response) => {
+    const MoviesDocument = await moviesService.getById(req.params.id)
+    if (!MoviesDocument) {
+      return res.sendStatus(EHTTP_STATUSES.NOT_FOUND);
+    }
+    res.status(EHTTP_STATUSES.OK).json(MoviesDocument)
+  },
+
+  removeMovieById: async (req: Request, res: Response) => {
+    const deleteMovie = await moviesService.removeById(req.params.id)
+    res.status(EHTTP_STATUSES.OK).json(deleteMovie)
   }
+
 }

@@ -8,6 +8,7 @@ const connectDataBase = async () => {
     console.log("===> Connected Mongoose Error <===", error)
   }
 }
+
 connectDataBase();
 
 app.listen(port, () => {
