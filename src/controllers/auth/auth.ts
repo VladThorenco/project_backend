@@ -8,7 +8,7 @@ export const authControllers = {
         password: password
       });
     } catch (e) {
-      return []
+      console.log('===> error <===', e);
     }
   },
   creteUser: async (title: string, password: string) => {
@@ -18,7 +18,7 @@ export const authControllers = {
         password: password
       });
     } catch (e) {
-      return []
+     console.log('===> error <===', e);
     }
   },
   checkUser: async (title: string, password: string) => {
@@ -28,7 +28,7 @@ export const authControllers = {
         password: password
       });
     } catch (e) {
-      return []
+      console.log('===> error <===', e);
     }
   },
 }

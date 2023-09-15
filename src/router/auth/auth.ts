@@ -18,7 +18,7 @@ export const getAuthRoutes = () => {
     return res.status(EHTTP_STATUSES.CREATED).json(createdCourse)
   });
 
-  router.get("/auth-me/:id", loginValidation, validationMiddleware, (req: Request, res: Response) => {
+  router.get("/auth-me", loginValidation, validationMiddleware, (req: Request, res: Response) => {
     const createdCourse = authControllers.creteUser(req.body.login, req.body.password);
     return res.status(EHTTP_STATUSES.CREATED).json(createdCourse)
   });
