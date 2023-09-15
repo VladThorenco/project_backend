@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import express from "express";
-import { db } from "./db";
-import { getAuthRoutes, getCoursesRoutes, getMoviesRoutes } from "./router";
+import { getAuthRoutes, getMoviesRoutes } from "./router";
 
 require("dotenv").config()
 
@@ -20,7 +19,6 @@ export const connectToDataBase = async () => {
 const jsonBodyMiddleware = express.json()
 app.use(jsonBodyMiddleware);
 
-app.use("/api/courses", getCoursesRoutes(db))
 app.use("/api/auth", getAuthRoutes())
 app.use("/api/movies", getMoviesRoutes())
 
