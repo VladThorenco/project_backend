@@ -1,8 +1,6 @@
-import mongoose from "mongoose";
+import { model, Schema } from "mongoose";
 
-const Scheme = mongoose.Schema;
-
-const moviesScheme = new Scheme({
+export const moviesSchema = new Schema({
   title: {
     type: String,
     require: true
@@ -24,4 +22,6 @@ const moviesScheme = new Scheme({
   reviews: [ {name: String, text: String} ]
 })
 
-export const Movie = mongoose.model("Movie", moviesScheme);
+export const Movie = model('Movie', moviesSchema);
+
+
