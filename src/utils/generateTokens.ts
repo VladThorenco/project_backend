@@ -1,7 +1,6 @@
-import { UserToken } from "../models/refreshToken/token";
 import jwt from "jsonwebtoken";
-import { ISchemaUser } from "../models/auth/type";
-
+import { UserToken } from "../models/token/token";
+import { ISchemaUser } from "../models/users/type";
 
 const generateTokens = async (user: ISchemaUser) => {
   try {

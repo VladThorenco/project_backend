@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { UserToken } from "../models/auth/token";
+import { UserToken } from "../models/token/token";
 
 export const verifyRefreshToken = (refreshToken: string) => {
   const privateKey = process.env.REFRESH_TOKEN_PRIVATE_KEY ?? "";
