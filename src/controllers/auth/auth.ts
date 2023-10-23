@@ -1,34 +1,65 @@
-import { authService } from "../../services";
+import { EHTTP_STATUSES } from "../../constans";
+import { Request, Response } from "express";
+import bcrypt from "bcrypt";
+import generateTokens from "../../utils/generateTokens";
+import { User } from "../../models/users/users";
 
 export const authControllers = {
-  getUser: async (title: string, password: string) => {
+  registration: async (req: Request, res: Response) => {
     try {
-      return await authService.getOne({
-        login: title,
-        password: password
-      });
-    } catch (e) {
-      console.log('===> error <===', e);
+      const user = await User.findOne({email: req.body.email});
+
+      if (user)
+        return res
+          .status(EHTTP_STATUSES.BAD_REQUEST)
+          .json({error: true, message: "User with given email already exist"});
+
+      const salt = await bcrypt.genSalt(Number(process.env.SALT));
+      const hashPassword = await bcrypt.hash(req.body.password, salt);
+
+      await new User({...req.body, password: hashPassword}).save();
+
+      res
+        .status(EHTTP_STATUSES.CREATED)
+        .json({error: false, message: "Account created sucessfully"});
+
+    } catch (err) {
+      console.log(err);
+      res.status(EHTTP_STATUSES.ERROR_SERVER).json({error: true, message: "Internal Server Error"});
     }
   },
-  creteUser: async (title: string, password: string) => {
+  login: async (req: Request, res: Response) => {
     try {
-      return await authService.create({
-        login: title,
-        password: password
+      const user = await User.findOne({email: req.body.email});
+      if (!user)
+        return res
+          .status(EHTTP_STATUSES.NOT_AUTHORIZED)
+          .json({error: true, message: "Invalid email or password"});
+
+      if (user && user.password) {
+        const verifiedPassword = await bcrypt.compare(
+          req.body.password,
+          user.password
+        );
+
+        if (!verifiedPassword)
+          return res
+            .status(EHTTP_STATUSES.NOT_AUTHORIZED)
+            .json({error: true, message: "Invalid email or password"});
+
+      }
+
+      const { accessToken, refreshToken} = await generateTokens(user);
+
+      res.status(EHTTP_STATUSES.OK).json({
+        error: false,
+        accessToken,
+        refreshToken,
+        message: "Logged in sucessfully",
       });
-    } catch (e) {
-     console.log('===> error <===', e);
-    }
-  },
-  checkUser: async (title: string, password: string) => {
-    try {
-      return await authService.check({
-        login: title,
-        password: password
-      });
-    } catch (e) {
-      console.log('===> error <===', e);
+    } catch (err) {
+      console.log(err);
+      res.status(EHTTP_STATUSES.ERROR_SERVER).json({error: true, message: "Internal Server Error"});
     }
   },
 }
