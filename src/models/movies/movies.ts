@@ -1,27 +1,25 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 export const moviesSchema = new Schema({
   title: {
     type: String,
-    require: true
+    require: true,
   },
   director: {
     type: String,
-    require: true
+    require: true,
   },
   year: {
     type: Number,
-    require: true
+    require: true,
   },
-  genre: [ String ],
+  genre: [String],
   rating: Number,
   duration: {
     hours: Number,
     minutes: Number,
   },
-  reviews: [ {name: String, text: String} ]
-})
+  reviews: [{ name: String, text: String }],
+});
 
 export const Movie = model('Movie', moviesSchema);
-
-

@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 export const UserSchema = new Schema({
   email: {
@@ -8,14 +8,12 @@ export const UserSchema = new Schema({
   },
   password: {
     type: String,
-    require: true
+    require: true,
   },
   rememberMe: {
     type: Boolean,
-    require: false
+    require: false,
   },
-})
+});
 
 export const User = model('User', UserSchema);
-
-

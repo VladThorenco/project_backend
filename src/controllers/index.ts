@@ -1,2 +1,2 @@
-export { authControllers } from "./auth/auth"
-export { moviesControllers } from "./movies/movies"
+export { authControllers } from './auth/auth';
+export { moviesControllers } from './movies/movies';
