@@ -29,8 +29,9 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "dev": "nodemon --inspect dist/index.js",
+    "nodemon": "nodemon --inspect dist/index.js",
     "watch": "yarn tsc -w",
+    "dev": "yarn nodemon & yarn watch",
     "build": "tsc",
     "start": "node /dist/index.js",
     "test": "jest"
