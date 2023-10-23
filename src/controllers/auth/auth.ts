@@ -1,14 +1,15 @@
 import { EHTTP_STATUSES } from "../../constans";
-import { Request, Response } from "express";
+import { Response } from "express";
 import bcrypt from "bcrypt";
 import generateTokens from "../../utils/generateTokens";
 import { User } from "../../models/users/users";
+import { RequestBody } from "../../types";
+import { IUser } from "./type";
 
 export const authControllers = {
-  registration: async (req: Request, res: Response) => {
+  registration: async (req: RequestBody<IUser>, res: Response) => {
     try {
       const user = await User.findOne({email: req.body.email});
-
       if (user)
         return res
           .status(EHTTP_STATUSES.BAD_REQUEST)
@@ -28,7 +29,7 @@ export const authControllers = {
       res.status(EHTTP_STATUSES.ERROR_SERVER).json({error: true, message: "Internal Server Error"});
     }
   },
-  login: async (req: Request, res: Response) => {
+  login: async (req: RequestBody<IUser>, res: Response) => {
     try {
       const user = await User.findOne({email: req.body.email});
       if (!user)
