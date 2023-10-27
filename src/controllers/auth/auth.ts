@@ -20,10 +20,6 @@ export const authControllers = {
       const hashPassword = await bcrypt.hash(req.body.password, salt);
 
       await new User({ ...req.body, password: hashPassword }).save();
-
-      // send to email
-      console.log('===> req.body.email <===', req.body.email);
-
       res
         .status(EHTTP_STATUSES.CREATED)
         .json({ error: false, message: 'Account created sucessfully' });
