@@ -1,7 +1,12 @@
 import express from 'express';
 require('dotenv').config();
 
-import { getAuthRoutes, getMoviesRoutes, getRefreshTokenRoutes } from './router';
+import {
+  getAuthRoutes,
+  getMoviesRoutes,
+  getRefreshTokenRoutes,
+  getMailRoutes,
+} from './router';
 
 export const app = express();
 export const port = process.env.PORT || 3000;
@@ -13,3 +18,4 @@ app.use(jsonBodyMiddleware);
 app.use('/api/auth', getAuthRoutes());
 app.use('/api/refreshToken', getRefreshTokenRoutes());
 app.use('/api/movies', getMoviesRoutes());
+app.use('/api/send-mailgun', getMailRoutes());

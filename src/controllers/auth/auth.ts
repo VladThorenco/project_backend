@@ -21,11 +21,13 @@ export const authControllers = {
 
       await new User({ ...req.body, password: hashPassword }).save();
 
+      // send to email
+      console.log('===> req.body.email <===', req.body.email);
+
       res
         .status(EHTTP_STATUSES.CREATED)
         .json({ error: false, message: 'Account created sucessfully' });
     } catch (err) {
-      console.log(err);
       res
         .status(EHTTP_STATUSES.ERROR_SERVER)
         .json({ error: true, message: 'Internal Server Error' });
@@ -33,7 +35,7 @@ export const authControllers = {
   },
   login: async (req: RequestBody<IUser>, res: Response) => {
     try {
-      const user = await User.findOne({ email: req.body.email });
+      const user: IUser | null = await User.findOne({ email: req.body.email });
       if (!user)
         return res
           .status(EHTTP_STATUSES.NOT_AUTHORIZED)
