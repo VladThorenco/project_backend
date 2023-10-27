@@ -33,7 +33,7 @@
   "scripts": {
     "nodemon": "nodemon --inspect dist/index.js",
     "watch": "yarn tsc -w",
-    "dev": "yarn nodemon & yarn watch",
+    "dev": "yarn watch & yarn nodemon ",
     "build": "tsc",
     "start": "node /dist/index.js",
     "test": "jest"
